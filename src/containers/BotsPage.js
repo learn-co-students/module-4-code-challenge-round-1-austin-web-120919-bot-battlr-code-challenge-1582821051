@@ -45,6 +45,15 @@ class BotsPage extends React.Component {
 
   // }
 
+  handleUnenlist = (e) => {
+    const botId = e.target.parentNode.parentNode.parentNode.id;
+    const foundBot = this.state.bots.find(bot => bot.id == botId);
+    const botIndex = this.state.yourBots.findIndex(bot => bot.id == foundBot.id)
+      this.setState({
+        yourBots: ([...this.state.yourBots.slice(0, botIndex), ...this.state.yourBots.slice(botIndex + 1, this.state.yourBots.length)])
+      })
+  }
+
   handleEnlist = e => {
     const botId = e.target.id;
     const foundBot = this.state.bots.find(bot => bot.id == botId);
@@ -64,6 +73,9 @@ class BotsPage extends React.Component {
         yourBots: [...this.state.yourBots, foundBot]
       });
     }
+    this.setState({
+      showDetail: false
+    })
   };
 
   handleClick = e => {
@@ -79,7 +91,7 @@ class BotsPage extends React.Component {
     return (
       <div>
         <YourBotArmy
-          handleClick={this.handleClick}
+          handleClick={this.handleUnenlist}
           yourBots={this.state.yourBots}
         />
         {this.state.showDetail ? (
